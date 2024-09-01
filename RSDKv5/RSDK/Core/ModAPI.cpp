@@ -496,9 +496,12 @@ void RSDK::UnloadMods()
         SKU::userDBStorage->ClearAllUserDBs();
 #endif
 }
-
+#include <chrono>
+#include <iostream>
+ #include <fstream>
 void RSDK::LoadMods(bool newOnly, bool32 getVersion)
 {
+    std::chrono::high_resolution_clock::time_point begin = std::chrono::high_resolution_clock::now();
     if (!newOnly) {
         UnloadMods();
 
@@ -585,6 +588,13 @@ void RSDK::LoadMods(bool newOnly, bool32 getVersion)
 
     SortMods();
     LoadModSettings();
+    std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+    std::ofstream out("bench.txt", std::ios::app);
+    out << "Time LoadMods() = " << std::chrono::duration<double>(end - begin).count() << " s\n";
+    out << "Time LoadMods() = " << std::chrono::duration<double, std::milli>(end - begin).count() << " ms\n";
+    out << "Time LoadMods() = " << std::chrono::duration<double, std::micro>(end - begin).count() << " µs\n";
+    out << "Time LoadMods() = " << std::chrono::duration<double, std::nano> (end - begin).count() << " ns\n";
+    out.close();
 }
 
 void loadCfg(ModInfo *info, const std::string &path)
