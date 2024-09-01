@@ -244,8 +244,8 @@ void SortMods();
 void LoadModSettings();
 void ApplyModChanges();
 
-bool32 ScanModFolder(ModInfo *info, const char *targetFile = nullptr, bool32 fromLoadMod = false, bool32 loadingBar = false);
-inline void RefreshModFolders(bool32 versionOnly = false, bool32 loadingBar = false)
+bool32 ScanModFolder(ModInfo *info, const char *targetFile = nullptr, bool32 fromLoadMod = false, bool32 loadingBar = true);
+inline void RefreshModFolders(bool32 versionOnly = false, bool32 loadingBar = true)
 {
     SortMods();
     for (int32 m = 0; m < modList.size(); ++m) {
